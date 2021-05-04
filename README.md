@@ -1,0 +1,3 @@
+[Raw PDF link](https://raw.githubusercontent.com/UkoeHB/break-dual-target-dl/master/break-dual-target-dl.pdf) (for browsers with built-in PDF readers)
+
+I describe a break in the 'dual-target discrete logarithm problem’, which is a novel hardness assumption defined in the Arcturus paper. The consequence of this break is that the Arcturus security proof does not hold as written. After discussing with Sarang Noether, the author of Arcturus, a proof-of-concept to investigate the consequences of the broken assumption is in progress, and the preprint will either be updated or withdrawn as necessary.

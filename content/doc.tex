@@ -1,0 +1,51 @@
+\textbf{Analysis: Dual-Target Discrete Logarithm Assumption}\\
+koe \texttt{ukoe@protonmail.com}\\
+\today
+
+Arcturus \cite{arcturus} depends on a novel hardness assumption called the `dual-target discrete logarithm problem' (defined in the same paper). I demonstrate a break in that assumption.
+
+Let the dual-target discrete logarithm challenger/adversary game play out as follows.
+
+\begin{enumerate}
+    \item Challenger: define $G$ and $H$
+
+    \item Adversary: randomly generate scalars $g_i$ and $h_i$ for $i = 0,...,n-1$. Define $G_i = g_i G$ and $H_i = h_i H$.
+
+    \item Challenger: define $\mu^i$ for $i = 0,...,n-1$.
+
+    \item Adversary: randomly generate scalars $x_i$ for $i = 2,...,n-1$. Define scalars $x_0$ and $x_1$ with the following procedure.
+\end{enumerate}
+
+\textbf{Note}: Adversary wants all of the following to be true. Challenger wants at least one to be false.
+
+\begin{itemize}
+    \item \(\sum \mu^i (G_i - x_i G) = I\)
+    \item \(\sum \mu^i (H - x_i H_i) = I\)
+    \item There exists an $0 \leq i < n$ such that either $x_i G \neq G_i$ or $x_i H_i \neq H$.
+\end{itemize}
+
+We can restate the first two conditions like this:
+\begin{align}
+    I &= \sum^{n - 1}_{i = 0} \mu^i * ( g_i - x_i) * G \\
+    I &= \sum^{n - 1}_{i = 0} \mu^i*(1 - x_i * h_i) * H
+\end{align}
+
+Define the following variables (all terms are known constants):
+\begin{align}
+    \lambda_g &= \mu^0 g_0 + \mu^1 g_1 + \sum^{n - 1}_{i = 2} \mu^i * (g_i - x_i) \\
+    \lambda_h &= \mu^0 + \mu^1 + \sum^{n - 1}_{i = 2} \mu^i * (1 - x_i * h_i)
+\end{align}
+
+If the following scalar equalities hold, then the previous elliptic curve equalities will also hold:
+\begin{align}
+    0 &= \lambda_g - \mu^0 x_0 - \mu^1 x_1 \\
+    0 &= \lambda_h - \mu^0 x_0 h_0 - \mu^1 x_1 h_1
+\end{align}
+
+There are two equations and two unknowns ($x_0$ and $x_1$). Solve and get:
+\begin{alignat}{3}
+    x_1 &= &&(\lambda_h - h_0 \lambda_g)/[\mu^1 (h_1 - h_0)] \\
+    x_0 &= -&&(\lambda_h - h_1 \lambda_g)/[\mu^0 (h_1 - h_0)]
+\end{alignat}
+
+Since $g_i$, $h_i$, and $x_i$ (for $i \neq 0, 1$) are random, there is no reason to expect the third game condition to fail every time (only if you are unlucky).
